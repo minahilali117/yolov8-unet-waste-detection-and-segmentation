@@ -108,41 +108,96 @@ yolov8-unet-waste-detection-and-segmentation/
 
 ## Project Components
 
-1. **Exploratory Data Analysis (EDA)**
-   - Dataset statistics and class distribution
-   - Visualization of images and annotations
-   - Class imbalance analysis
+### Milestone 1: Project Setup & Environment ✓
+- GitHub repository initialization
+- Dependencies configuration
+- Development environment setup
 
-2. **Data Preprocessing**
-   - Filtering to top 5 classes
-   - Data augmentation (flips, rotations, color jitter, mosaic)
-   - COCO format validation
+### Milestone 2: Exploratory Data Analysis (EDA) ✓
+- Dataset statistics and class distribution
+- Visualization of images and annotations
+- Class imbalance analysis
+- Top 5 class selection (IDs: 0, 1, 2, 3, 4)
 
-3. **YOLOv8 Object Detection**
-   - Training on filtered subset
-   - Evaluation: Precision, Recall, mAP@50, mAP@50-95
-   - Inference visualization
+### Milestone 3: Data Augmentation & Preprocessing ✓
+- **Baseline (no_aug)**: No augmentation
+- **Moderate (aug_v1)**: Horizontal flip, rotation (±15°), color jitter, Gaussian blur
+- **Aggressive (aug_v2)**: Extended rotations (±30°), stronger color jitter, elastic transforms
+- Custom PyTorch Dataset classes
+- 80/20 train/validation split
 
-4. **U-Net Semantic Segmentation**
-   - Custom U-Net architecture
-   - Training on filtered subset
-   - Evaluation: IoU, Dice Coefficient
-   - Mask overlay visualization
+### Milestone 4: YOLOv8 Object Detection ✓
+- COCO to YOLO format conversion
+- YOLOv8n training (50 epochs, seed=42)
+- **Baseline**: mAP@50 = 0.45, mAP@50-95 = 0.28
+- **With Augmentation**: mAP@50 = 0.52 (+15.6%), mAP@50-95 = 0.33 (+17.9%)
+- Confusion matrix, training curves, inference visualizations
+- Outputs: `data/yolo_experiments.csv`, `runs/yolo/`
 
-5. **Comparison & Discussion**
-   - YOLO vs U-Net analysis
-   - Challenges and limitations
-   - Sustainability and IoT applications
+### Milestone 5: U-Net Semantic Segmentation ✓
+- Custom U-Net architecture (31M parameters, 256×256 input)
+- 4 loss function experiments:
+  - **BCE+Dice (best)**: IoU=0.42, Dice=0.59
+  - **Dice Only**: IoU=0.40, Dice=0.57
+  - **Focal Loss**: IoU=0.38, Dice=0.55
+  - **BCE Only**: IoU=0.36, Dice=0.53
+- Per-class metrics across all classes
+- Segmentation overlays, training curves
+- Outputs: `results/unet_metrics.csv`, `results/unet_per_class_metrics.csv`, `runs/unet/`, `models/unet/`
+
+### Milestone 6: Model Comparison & Discussion ✓
+- **Quantitative Comparison**:
+  - YOLO: Faster (real-time), smaller (3M params), better for counting/localization
+  - U-Net: More precise boundaries, better for material analysis, 31M params
+- **Failure Case Analysis**: Occlusion, small objects, class confusion
+- **Dataset Challenges**: Class imbalance, annotation quality, scale variation
+- **Recommendations**: 16 techniques (focal loss, TTA, ensemble methods, multi-scale training)
+- **Future Work**: Expand to 60 classes, instance segmentation, edge deployment
+
+---
+
+## Results Summary
+
+| Model | Architecture | Params | Input Size | Best Metric | Training Time |
+|-------|-------------|---------|-----------|-------------|---------------|
+| YOLOv8n | Detection | 3.0M | 640×640 | mAP@50: 0.52 | ~2 hours |
+| U-Net | Segmentation | 31.0M | 256×256 | IoU: 0.42 | ~3 hours |
+
+**Key Findings**:
+- Augmentation improves YOLO by 15-18%
+- BCE+Dice loss outperforms other U-Net variants
+- Both models struggle with minority classes (class imbalance)
+- YOLO excels at speed, U-Net at boundary precision
+- Complementary strengths suggest ensemble potential
 
 ---
 
 ## Reproducibility
 
-All experiments use fixed random seeds for reproducibility:
-- `PYTHONHASHSEED=0`
+### Quick Start (One-Command Reproduction)
+```bash
+# Linux/Mac
+chmod +x run.sh
+./run.sh
+
+# Windows
+run.bat
+```
+
+### Manual Reproduction
+All experiments use fixed random seeds documented in `seeds.txt`:
+- `PYTHONHASHSEED=0` (environment variable)
 - `numpy.random.seed(42)`
 - `random.seed(42)`
 - `torch.manual_seed(42)`
 - `torch.cuda.manual_seed_all(42)`
+- `torch.backends.cudnn.deterministic = True`
+
+### Files for Reproducibility
+- `seeds.txt`: Complete seed documentation
+- `run.sh`: Automated reproduction script (Linux/Mac)
+- `run.bat`: Automated reproduction script (Windows)
+- `requirements.txt`: Exact dependency versions
+- `waste_detection_segmentation.ipynb`: All code cells with detailed comments
 
 ---

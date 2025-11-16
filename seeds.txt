@@ -1,0 +1,70 @@
+================================================================================
+REPRODUCIBILITY SEEDS
+================================================================================
+
+Project: YOLOv8 + U-Net Waste Detection and Segmentation
+Course: CS4045 Deep Learning for Perception
+Team: Minahil Ali (22i-0849), Ayaan Khan (22i-0832)
+Date: November 16, 2025
+
+================================================================================
+RANDOM SEEDS USED
+================================================================================
+
+All experiments in this project use the following seeds for reproducibility:
+
+1. PYTHONHASHSEED: 0
+   - Set via environment variable before importing libraries
+   - Ensures deterministic Python hash functions
+   - Command: set PYTHONHASHSEED=0 (Windows) / export PYTHONHASHSEED=0 (Linux/Mac)
+
+2. Python Random Module: 42
+   - random.seed(42)
+   - Used for general random operations
+
+3. NumPy Random: 42
+   - np.random.seed(42)
+   - Used for array operations and data sampling
+
+4. PyTorch Random: 42
+   - torch.manual_seed(42)
+   - torch.cuda.manual_seed(42)
+   - torch.cuda.manual_seed_all(42)
+   - Used for model initialization and training
+
+5. CUDNN Deterministic: True
+   - torch.backends.cudnn.deterministic = True
+   - torch.backends.cudnn.benchmark = False
+   - Ensures reproducible GPU operations
+
+6. Train/Val Split: 42
+   - train_test_split(test_size=0.2, random_state=42)
+   - Ensures identical dataset splits across runs
+
+================================================================================
+ADDITIONAL NOTES
+================================================================================
+
+- All seeds are set in the notebook setup cells (Section 1)
+- Seeds are re-applied before each major operation (augmentation, training)
+- YOLOv8 training uses built-in seed parameter: model.train(seed=42, ...)
+- U-Net training uses manual seeding before training loop
+- Results may vary slightly across different hardware/CUDA versions
+
+================================================================================
+VERIFICATION
+================================================================================
+
+To verify reproducibility:
+1. Run the notebook twice on the same machine
+2. Compare final metrics (mAP, IoU, Dice)
+3. Metrics should match to at least 3 decimal places
+4. Training curves should be identical (plotted outputs)
+
+If results differ:
+- Check CUDA/PyTorch version compatibility
+- Verify all seeds are applied before operations
+- Ensure PYTHONHASHSEED is set in environment
+- Consider running on CPU for perfect reproducibility (slower)
+
+================================================================================
