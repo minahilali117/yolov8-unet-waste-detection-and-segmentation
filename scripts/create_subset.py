@@ -8,10 +8,6 @@ and creates a new subset with filtered annotations and images.
 Usage:
     python create_subset.py --class-ids 0 1 2 3 4
     python create_subset.py --class-ids 0 1 2 3 4 --data-dir ./data/TACO --output-dir ./data/taco_subset
-
-Authors: Minahil Ali (22i-0849), Ayaan Khan (22i-0832)
-Course: Deep Learning for Perception (CS4045)
-Date: November 16, 2025
 """
 
 import argparse
