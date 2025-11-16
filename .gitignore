@@ -1,0 +1,95 @@
+# Local project notes (not for GitHub)
+PROJECT_NOTES.txt
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# PyTorch
+*.pth
+*.pt
+*.ckpt
+
+# Dataset
+data/
+!data/.gitkeep
+
+# Training outputs
+runs/
+!runs/.gitkeep
+wandb/
+logs/
+
+# Model weights
+weights/
+!weights/.gitkeep
+*.weights
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+*.bak
+
+# Temporary files
+*.tmp
+*.log
+*.cache
+
+# Kaggle
+kaggle.json
+*.zip
+*.tar.gz
+
+# TensorBoard
+events.out.tfevents.*
+
+# Experiment tracking
+.wandb/
+mlruns/
+
+# Output files
+*.png
+*.jpg
+*.jpeg
+!examples/*.png
+!examples/*.jpg
+
+# Exception: Keep example images if you create an examples folder
+!examples/
