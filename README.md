@@ -146,15 +146,3 @@ All experiments use fixed random seeds for reproducibility:
 - `torch.cuda.manual_seed_all(42)`
 
 ---
-
-## License
-
-This project is for educational purposes as part of CS4045 coursework.
-
----
-
-## Contact
-
-For questions or issues:
-- Minahil Ali: 22i-0849
-- Ayaan Khan: 22i-0832
